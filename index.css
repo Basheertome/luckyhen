@@ -21,7 +21,7 @@ html {
 
 body {
 	min-height: 100%;
-	background: #fad7ce;
+	background: #fad7ce url("tile.png");
 	color: #9e3937;
 	font-family: "Metric", sans-serif;
 	font-size: 16px;
@@ -51,6 +51,15 @@ body {
 	display: block;
 	width: 130px;
 	margin: 25px auto 40px auto;
+}
+
+#illustration {
+	position: absolute;
+	top: 0; right: 0;
+	display: block;
+	width: 35%;
+	max-width: 400px;
+	z-index: -1;
 }
 
 span {
