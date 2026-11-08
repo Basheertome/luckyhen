@@ -2,7 +2,6 @@
 h1,h2,h3 { font-size: 100%; font-weight: normal; }
 ol,ul { list-style: none; }
 img { border: 0; }
-html { min-height: 100%; }
 
 ::selection {
   background: rgba(255,216,0,.7);
@@ -16,12 +15,14 @@ html { min-height: 100%; }
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
+  background: #fad7ce url("tile.png") repeat;
 }
 
 body {
-	min-height: 100%;
-	background: #fad7ce url("tile.png");
+	min-height: 100vh;
+	min-height: 100lvh;
+	background: transparent;
 	color: #9e3937;
 	font-family: "Metric", sans-serif;
 	font-size: 16px;
