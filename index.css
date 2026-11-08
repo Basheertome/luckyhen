@@ -64,11 +64,6 @@ body {
 	z-index: 0;
 }
 
-span {
-	display: inline-block;
-	width: 50%;
-}
-
 h2 {
 	text-align: center;
 	font-size: 26px;
@@ -118,4 +113,24 @@ a:active {
         url("fonts/Metric-Medium.svg#Metric-Medium") format("svg");
     font-weight: bold;
     font-style: normal;
+}
+
+/* Let the existing tile repeat beneath Duo Safari's controls without widening the content. */
+html[data-duo-wide] {
+  overflow-x: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+html[data-duo-wide] body {
+  width: var(--duo-viewport-width);
+}
+
+html[data-duo-wide] .container {
+  margin-left: var(--duo-inset-left);
+  margin-right: var(--duo-inset-right);
+}
+
+html[data-duo-wide] #illustration {
+  right: var(--duo-inset-right);
+  width: calc((var(--duo-viewport-width) - var(--duo-inset-left) - var(--duo-inset-right)) * 0.35);
 }
