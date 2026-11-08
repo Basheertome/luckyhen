@@ -14,14 +14,21 @@ img { border: 0; }
   text-shadow: none;
 }
 
+:root {
+  --edge-color: #fad7ce;
+  --edge-fade: 0px;
+  --edge-radius: 0px;
+}
+
 html {
-  min-height: 100%;
-  background: #fad7ce url("tile.png") repeat;
+  background: #fad7ce;
 }
 
 body {
+	position: relative;
+	isolation: isolate;
 	min-height: 100vh;
-	min-height: 100lvh;
+	min-height: 100svh;
 	background: transparent;
 	color: #9e3937;
 	font-family: "Metric", sans-serif;
@@ -38,6 +45,26 @@ body {
 	align-items: center;
 }
 
+/* Keep the tile separate from content so only its edges fade into the canvas. */
+.background-frame {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--edge-radius);
+  overflow: clip;
+  background: url("tile.png") repeat;
+}
+
+.background-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 var(--edge-fade) calc(var(--edge-fade) * .3) var(--edge-color),
+              inset 0 0 calc(var(--edge-fade) * .25) calc(var(--edge-fade) * .12) var(--edge-color);
+}
+
 .container {
 	position: relative;
 	flex: 1;
@@ -48,6 +75,8 @@ body {
 	max-width: 350px;
 	margin: 0 auto;
 	padding: 50px;
+	padding-left: max(50px, env(safe-area-inset-left));
+	padding-right: max(50px, env(safe-area-inset-right));
 }
 
 #mark {
@@ -58,7 +87,8 @@ body {
 
 #illustration {
 	position: absolute;
-	top: 0; right: 0;
+	top: 0;
+	right: env(safe-area-inset-right);
 	display: block;
 	width: 35%;
 	max-width: 400px;
@@ -94,6 +124,20 @@ a:active {
 	}
 }
 
+@media (max-height: 450px) {
+	.main {
+		padding-top: 16px;
+		padding-bottom: 16px;
+	}
+}
+
+@media (hover: none) and (pointer: coarse) {
+  :root {
+    --edge-fade: clamp(100px, 28vmin, 140px);
+    --edge-radius: clamp(56px, 18vmin, 80px);
+  }
+}
+
 @font-face {
     font-family: "Metric";
     src: url("fonts/Metric-Regular.eot");
@@ -114,24 +158,4 @@ a:active {
         url("fonts/Metric-Medium.svg#Metric-Medium") format("svg");
     font-weight: bold;
     font-style: normal;
-}
-
-/* Let the existing tile repeat beneath Duo Safari's controls without widening the content. */
-html[data-duo-wide] {
-  overflow-x: hidden;
-  touch-action: pan-y pinch-zoom;
-}
-
-html[data-duo-wide] body {
-  width: var(--duo-viewport-width);
-}
-
-html[data-duo-wide] .container {
-  margin-left: var(--duo-inset-left);
-  margin-right: var(--duo-inset-right);
-}
-
-html[data-duo-wide] #illustration {
-  right: var(--duo-inset-right);
-  width: calc((var(--duo-viewport-width) - var(--duo-inset-left) - var(--duo-inset-right)) * 0.35);
 }
